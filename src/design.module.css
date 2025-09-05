@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+body{
+    margin:0;
+    display:flex;
+    flex-direction: column;
+    background-color: rgba(192, 255, 255, 0.475);
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+.title{
+    text-align:center;
+    margin:0;
+    font-family:'Pacifico','Arial';
+    font-size:3.5em;
+    background:linear-gradient(0deg,rgba(217, 240, 8, 0.874),rgb(20, 209, 51));
+    background-clip: text;
+    border-bottom: 5px ridge grey;
+    border-bottom-left-radius: .5em;
+    border-bottom-right-radius: .5em;
+    box-shadow: 0 0 1em 5px rgba(92, 255, 111, 0.345);
+
+    -webkit-text-fill-color: transparent;
+}
+
+.inner_card{
+    background-color: rgba(255, 246, 179, 0.516);
+    margin:1em;
+    border-radius: 10px;
+    height:19em;
+    box-shadow: 0em .5em 1em rgba(14, 20, 18, 0.251);
+}
