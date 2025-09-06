@@ -9,7 +9,14 @@ const app = express();
 app.use(cors({ origin: ['http://localhost:3000', 'http://localhost:3001'] }));
 app.use(express.json());
 
-const SPOONACULAR_KEY = process.env.SPOONACULAR_KEY;
+const SPOONACULAR_KEYS = process.env.SPOONACULAR_KEYS.split(",");
+let currentKeyIndex = 0;
+
+function getNextKey() {
+  const key = SPOONACULAR_KEYS[currentKeyIndex];
+  currentKeyIndex = (currentKeyIndex + 1) % SPOONACULAR_KEYS.length;
+  return key;
+}
 
 // Helper: Calculate approximate daily calories
 const calculateCalories = ({ age, weight, height, activityLevel, healthGoals }) => {
@@ -41,7 +48,8 @@ app.post("/api/generate-mealplan", async (req, res) => {
     const exclude = profile.allergies.join(",") || undefined;
 
     // Spoonacular API call
-    const url = `https://api.spoonacular.com/mealplanner/generate?timeFrame=week&targetCalories=${calories}&diet=${diet}&exclude=${exclude}&apiKey=${SPOONACULAR_KEY}`;
+    const apiKey = getNextKey();
+    const url = `https://api.spoonacular.com/mealplanner/generate?timeFrame=week&targetCalories=${calories}&diet=${diet}&exclude=${exclude}&apiKey=${apiKey}`;
     const response = await fetch(url);
     const data = await response.json();
 
@@ -59,7 +67,7 @@ app.post("/api/generate-mealplan", async (req, res) => {
     const allIngredients = {};
     for (const dayData of Object.values(data.week || {})) {
       for (const meal of dayData.meals) {
-        const mealDetailUrl = `https://api.spoonacular.com/recipes/${meal.id}/information?includeNutrition=false&apiKey=${SPOONACULAR_KEY}`;
+        const mealDetailUrl = `https://api.spoonacular.com/recipes/${meal.id}/information?includeNutrition=false&apiKey=${getNextKey()}`;
         const mealResp = await fetch(mealDetailUrl);
         const mealInfo = await mealResp.json();
         mealInfo.extendedIngredients?.forEach(ing => {
