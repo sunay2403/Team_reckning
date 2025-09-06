@@ -134,8 +134,7 @@ const ShoppingList = ({
       alert('Export failed. Please try again.');
     }
   };
-
-  // Safe calculations
+  
   const totalItems = (() => {
     try {
       let count = 0;
