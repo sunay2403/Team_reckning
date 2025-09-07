@@ -55,7 +55,6 @@ Our project tackles this by building an **AI-powered meal planner** that generat
 ---
 
 ## 📂 Project Structure  
-.
 ├── backend # Node.js + Express server
 ├── frontend # React.js frontend
 ├── shoppinglist # Shopping list module
